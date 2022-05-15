@@ -19,7 +19,6 @@ const Intro = () => {
         <a className="text-3xl md:text-4xl font-bold font-sans tracking-tighter leading-tight md:pr-8 hover:underline">
           <svg
             id="Layer_1"
-            style={{ enableBackground: 'new 0 0 32 32' }}
             version="1.1"
             viewBox="0 0 32 32"
             xmlns="http://www.w3.org/2000/svg"

@@ -17,7 +17,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
         console.log('colorsArr: ', colorsArr);
         return palette.colors.some((color) => {
           console.log('color: ', colors);
-          return colorsArr.some((curr) => {
+          return colorsArr.some((curr: any) => {
             console.log('curr: ', curr);
             return curr == color.id;
           });

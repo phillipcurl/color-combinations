@@ -21,7 +21,7 @@ import GeneratedAvatar, { Variants } from './generated-avatar';
 // import useInfiniteScroll from '../../lib/useInfiniteScroll';
 
 type ColorCardProps = {
-  palette: Array<{
+  palette: {
     hsl: string;
     scale: string[];
     name: string;
@@ -31,7 +31,9 @@ type ColorCardProps = {
     lab: number[];
     rgb: number[];
     hex: string;
-  }>;
+    colors: Array<any>;
+    id: any;
+  };
   number: number;
   style: 'square' | 'circle';
   variant: Variants;

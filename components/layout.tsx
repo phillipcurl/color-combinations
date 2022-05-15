@@ -1,7 +1,7 @@
 import Alert from './alert';
 import Footer from './footer';
 import Meta from './meta';
-import { useColor } from '../lib/color-context';
+// import { useColor } from '../lib/color-context';
 
 type Props = {
   preview?: boolean;

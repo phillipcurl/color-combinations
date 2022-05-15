@@ -52,27 +52,27 @@ function colorReducer(state: State, action: Action) {
   }
 }
 
-function ColorProvider({ children }: ColorProviderProps) {
-  const [state, dispatch] = useReducer(colorReducer, {
-    colors: DEFAULT_PALETTE,
-    paletteIndex: 0,
-    palettes: [],
-  });
-  // NOTE: you *might* need to memoize this value
-  // Learn more in http://kcd.im/optimize-context
-  const value = { state, dispatch };
-  return (
-    <ColorStateContext.Provider value={value}>
-      {children}
-    </ColorStateContext.Provider>
-  );
-}
+// function ColorProvider({ children }: ColorProviderProps) {
+//   const [state, dispatch] = useReducer(colorReducer, {
+//     colors: DEFAULT_PALETTE,
+//     paletteIndex: 0,
+//     palettes: [],
+//   });
+//   // NOTE: you *might* need to memoize this value
+//   // Learn more in http://kcd.im/optimize-context
+//   const value = { state, dispatch };
+//   return (
+//     <ColorStateContext.Provider value={value}>
+//       {children}
+//     </ColorStateContext.Provider>
+//   );
+// }
 
-function useColor() {
-  const context = useContext(ColorStateContext);
-  if (context === undefined) {
-    throw new Error('useColor must be used within a ColorProvider');
-  }
-  return context;
-}
-export { ColorProvider, useColor };
+// function useColor() {
+//   const context = useContext(ColorStateContext);
+//   if (context === undefined) {
+//     throw new Error('useColor must be used within a ColorProvider');
+//   }
+//   return context;
+// }
+// export { ColorProvider, useColor };
