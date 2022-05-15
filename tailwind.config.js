@@ -47,6 +47,7 @@ module.exports = {
   },
   plugins: [
     require('nightwind'),
+    require('tailwindcss-radix')(),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
   ],

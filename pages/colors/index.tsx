@@ -1,5 +1,4 @@
 import {
-  Fragment,
   // useEffect,
   // useMemo,
   useState,
@@ -7,40 +6,22 @@ import {
   // ReactNode,
 } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/solid';
-import nightwind from 'nightwind/helper';
-import {
-  MoonIcon,
-  SunIcon,
-  // ColorSwatchIcon,
-  // RefreshIcon,
-} from '@heroicons/react/outline';
 // import colorsDicts from 'dictionary-of-colour-combinations';
 
 import Container from '../../components/container';
 import Intro from '../../components/intro';
 import Layout from '../../components/layout';
-import PaletteCard from '../../components/palette-card';
-import Filter from '../../components/filter';
-import GeneratedAvatar from '../../components/generated-avatar';
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (input: any, ...args: any) =>
+  fetch(input, ...args).then((res) => res.json());
 
 const encodeObjectToQueryParams = (obj: any) =>
   Object.entries(obj)
     .map(([key, val]) => `${key}=${val}`)
     .join('&');
-
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
-const generateRandomString = (length = 6) => {
-  return `${Math.random().toString(20).substr(2, length)}`;
-};
 
 type IllustrationTypeConfig = {
   variant: 'pixel' | 'bauhaus' | 'ring' | 'sunset' | 'marble';
@@ -81,23 +62,14 @@ const IllustrationTypes: {
 
 const Index = () => {
   const router = useRouter();
-  // console.log('router: ', router);
-  const { limit = 20, skip = 0, numColors } = router.query;
+  const { limit = 20, skip = 0 } = router.query;
   const skipCount = Number(skip);
-  const limitCount = Number(limit);
 
   const now = new Date(Date.now());
   const today = now.toLocaleDateString();
-  const [
-    illustrationConfig,
-    setIllustrationConfig,
-  ] = useState<IllustrationTypeConfig>(IllustrationTypes.Bauhaus);
-  const [minColors, setMinColors] = useState(2);
-  // const [visibleItems, setVisibleItems] = useState(20);
-  // const [skipCount, setSkipCount] = useState(0);
-  const [baseString, setBaseString] = useState(today);
-  // const { state } = useColor();
-  // const { palettes: statefulPalettes } = state;
+  const [,] = useState<IllustrationTypeConfig>(IllustrationTypes.Bauhaus);
+  const [] = useState(2);
+  const [] = useState(today);
 
   const { data, error } = useSWR(
     `/api/colors?${encodeObjectToQueryParams(router.query || {})}`,
@@ -107,25 +79,6 @@ const Index = () => {
   const isLoading = !error && !data;
 
   console.log('data: ', data);
-
-  // const formattedPalettes = useMemo(() => {
-  //   return statefulPalettes
-  //     .map((palette) =>
-  //       palette.map((curr) => ({
-  //         ...colorsDicts[curr],
-  //         hsl: getHslFromHex(colorsDicts[curr].hex),
-  //         scale: getScalesFromHex(colorsDicts[curr].hex),
-  //       }))
-  //     )
-  //     .sort(() => Math.random() - 0.5);
-  //   // .reverse();
-  // }, [statefulPalettes]);
-
-  // const visiblePalettes = useMemo(() => {
-  //   return formattedPalettes.filter((pal) => pal.length >= minColors);
-  // }, [formattedPalettes, minColors]);
-
-  const handleChangeIllustration = () => {};
 
   return (
     <>
@@ -160,36 +113,61 @@ const Index = () => {
           ) : (
             <div
               // ref={scrollerRef}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 px-4 lg:px-0"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12 px-4 lg:px-0"
             >
-              {data.colors.map((color: any, index: any) => (
-                <div
-                  className="p-6 border-solid relative"
-                  style={{
-                    backgroundColor: color.hex,
-                    color:
-                      color.lightContrast > color.darkContrast
-                        ? color.lightScale[0]
-                        : color.darkScale[9],
-                    // borderColor:
-                    //   color.lightContrast > color.darkContrast
-                    //     ? color.lightScale[0]
-                    //     : color.darkScale[9],
-                  }}
-                >
+              {data.colors.map((color: any) => (
+                <Link href={`/colors/${color?.id}`}>
                   <div
-                    className="absolute flex items-center justify-center w-12 h-12 bg-white rounded-full z-10 shadow-md"
-                    style={{ top: '-1.5rem', left: '-1.5rem' }}
+                    className="p-6 border-solid relative space-y-6 cursor-pointer"
+                    style={{
+                      backgroundColor: color.hex,
+                      color:
+                        color.lightContrast > color.darkContrast
+                          ? color.lightScale[0]
+                          : color.darkScale[9],
+                      // borderColor:
+                      //   color.lightContrast > color.darkContrast
+                      //     ? color.lightScale[0]
+                      //     : color.darkScale[9],
+                    }}
                   >
-                    <p className="text-lg font-bold">{color.id}</p>
+                    <div
+                      className="absolute flex items-center justify-center w-12 h-12 bg-white rounded-full z-10 shadow-md"
+                      style={{ top: '-1.5rem', left: '-1.5rem' }}
+                    >
+                      <p className="text-lg font-bold">{color.id}</p>
+                    </div>
+                    <h2 className="text-3xl font-bold text-current">
+                      {color.name}
+                    </h2>
+                    <div className="inline-flex items-center w-full">
+                      {color.lightScale.map((val) => (
+                        <div
+                          key={Math.random()}
+                          className="w-6 h-6"
+                          style={{
+                            backgroundColor: val,
+                          }}
+                        ></div>
+                      ))}
+                      {color.darkScale.slice(1).map((val) => (
+                        <div
+                          key={Math.random()}
+                          className="w-6 h-6"
+                          style={{
+                            backgroundColor: val,
+                          }}
+                        ></div>
+                      ))}
+                    </div>
+                    <h2 className="font-bold text-current">
+                      {color?.combinations?.length || 0} combinations
+                    </h2>
+                    {/* <pre className="overflow-auto text-current max-h-52">
+                      {JSON.stringify(color, null, 2)}
+                    </pre> */}
                   </div>
-                  <h2 className="text-3xl font-bold text-current">
-                    {color.name}
-                  </h2>
-                  <pre className="overflow-auto text-current max-h-52">
-                    {JSON.stringify(color, null, 2)}
-                  </pre>
-                </div>
+                </Link>
               ))}
               {/* {hasMore && visiblePalettes.length && (
               <div ref={loaderRef}>Loading…</div>

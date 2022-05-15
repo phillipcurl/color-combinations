@@ -23,6 +23,7 @@ import {
 
 import Container from '../components/container';
 import ColorSelect from '../components/color-select';
+import CombinationSettingsMenu from '../components/combination-settings-menu';
 import Intro from '../components/intro';
 import Layout from '../components/layout';
 import PaletteCard from '../components/palette-card';
@@ -30,11 +31,12 @@ import Filter from '../components/filter';
 import GeneratedAvatar from '../components/generated-avatar';
 import Post from '../types/post';
 import ProjectType from '../types/project';
-import { useColor } from '../lib/color-context';
+// import { useColor } from '../lib/color-context';
 // import { getHslFromHex, getScalesFromHex } from '../lib/color';
 // import useInfiniteScroll from '../lib/useInfiniteScroll';
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (input: any, ...args: any) =>
+  fetch(input, ...args).then((res) => res.json());
 
 const encodeObjectToQueryParams = (obj: any) =>
   Object.entries(obj)
@@ -161,7 +163,7 @@ const Index = ({ allPosts, allProjects }: Props) => {
             <div className="flex items-center justify-between w-full">
               <div>
                 <h1 className="text-2xl font-bold font-sans">
-                  Combinations
+                  Color Combinations
                   <small className="text-gray-600 ml-2">
                     ({!isLoading ? paletteData.totalCount || 0 : '...'})
                   </small>
@@ -172,6 +174,7 @@ const Index = ({ allPosts, allProjects }: Props) => {
                 </p>
               </div>
               <div className="inline-flex items-center space-x-4">
+                <CombinationSettingsMenu />
                 <Menu as="div" className="relative inline-block text-left">
                   {({ open }) => (
                     <>

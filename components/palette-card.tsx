@@ -49,7 +49,7 @@ const ColorCard = ({
 }: ColorCardProps) => {
   return (
     <Link href={`/combinations/${palette?.id}`}>
-      <a className="flex flex-col relative color-card">
+      <a className="flex flex-col relative color-card z-0">
         <div
           className="absolute flex items-center justify-center w-12 h-12 bg-white rounded-full z-10 shadow-md"
           style={{ top: '-1.5rem', left: '-1.5rem' }}
