@@ -5,7 +5,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query;
 
-    const color = colors.find((color) => color?.id === id);
+    const color = colors.find((color) => color.id == id);
 
     res.status(200).json({
       color,
